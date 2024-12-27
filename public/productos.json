@@ -1,0 +1,127 @@
+[
+  {
+    "ID": 1,
+    "NombreProducto": "DAVESOL LOCIÓN ",
+    "Presentacion": "60 ML",
+    "PrincipioActivo": "PERMETRINA",
+    "PrecioFarmacia": 2.5,
+    "PVP": 3,
+    "Promocion": "6+1 10+2",
+    "Marca": "ADISA",
+    "IVA": "SI"
+  },
+  {
+    "ID": 3,
+    "NombreProducto": "DIGESFLAT TABLETA",
+    "Presentacion": "CAJA x 50",
+    "PrincipioActivo": "PANCREATINA DIMETILPOLISILOXANO",
+    "PrecioFarmacia": 10,
+    "PVP": 12,
+    "Promocion": "6+1 10+2",
+    "Marca": "ADISA",
+    "IVA": "SI"
+  },
+
+  {
+    "ID": 66,
+    "NombreProducto": "CATHETER C/ALAS SAFETY No.14/16/18/20/22/24 ANTIPINCHAZO",
+    "Presentacion": "UNIDAD",
+    "PrincipioActivo": "PANCREATINA DIMETILPOLISILOXANO",
+    "PrecioFarmacia": 0.96,
+    "PVP": 1.38,
+    "Promocion": "6+1 10+2",
+    "Marca": "HEALVAN",
+    "IVA": "NO"
+  },
+  {
+    "ID": 67,
+    "NombreProducto": "CATHETER INTROCAN No.14/16/18/20/22/24",
+    "Presentacion": "UNIDAD",
+    "PrincipioActivo": "PANCREATINA DIMETILPOLISILOXANO",
+    "PrecioFarmacia": 0.925,
+    "PVP": 1.32,
+    "Promocion": "12+1",
+    "Marca": "BRAUN",
+    "IVA": "NO"
+  },
+  {
+    "ID": 68,
+    "NombreProducto": "CATHETER INTROCAN SAFETY No.14/16/18/20/22/24 ANTIPINCHAZO",
+    "Presentacion": "UNIDAD",
+    "PrincipioActivo": "PANCREATINA DIMETILPOLISILOXANO",
+    "PrecioFarmacia": 1.5,
+    "PVP": 2.15,
+    "Promocion": "12+1",
+    "Marca": "BRAUN",
+    "IVA": "NO"
+  },
+  {
+    "ID": 69,
+    "NombreProducto": "CATHETER INTROCAN SAFETY No.20 ANTIPINCHAZO",
+    "Presentacion": "UNIDAD",
+    "PrincipioActivo": "PANCREATINA DIMETILPOLISILOXANO",
+    "PrecioFarmacia": 0.6,
+    "PVP": 0.86,
+    "Promocion": "6+1  10+2  50+12  100+30",
+    "Marca": "BRAUN",
+    "IVA": "NO"
+  },
+  {
+    "ID": 70,
+    "NombreProducto": "CATHETER C/ALAS VASOFIX No.18/20/22  ",
+    "Presentacion": "UNIDAD",
+    "PrincipioActivo": "PANCREATINA DIMETILPOLISILOXANO",
+    "PrecioFarmacia": 2.2,
+    "PVP": 3.16,
+    "Promocion": "12+1",
+    "Descuento": "4% DSCTO + DE 2 UNID",
+    "Marca": "BRAUN",
+    "IVA": "NO"
+  },
+  {
+    "ID": 71,
+    "NombreProducto": "CATHETER ANTINPINCHAZO  No 18 y 20",
+    "Presentacion": "UNIDAD",
+    "PrincipioActivo": "PANCREATINA DIMETILPOLISILOXANO",
+    "PrecioFarmacia": 0.6,
+    "PVP": 0.86,
+    "Promocion": "6+1  10+2  50+12  100+30",
+    "Marca": "PLUSCLIP ALPHA",
+    "IVA": "NO"
+  },
+
+  {
+    "ID": 76,
+    "NombreProducto": "EQUIPO DE SUERO 170 CM",
+    "Presentacion": "UNIDAD",
+    "PrincipioActivo": "PANCREATINA DIMETILPOLISILOXANO",
+    "PrecioFarmacia": 0.4,
+    "PVP": 0.57,
+    "Promocion": "6+1  10+2  50+12  100+30",
+    "Marca": "HEILER",
+    "IVA": "NO"
+  },
+  {
+    "ID": 77,
+    "NombreProducto": "EQUIPO DE SUERO 150 CM",
+    "Presentacion": "UNIDAD",
+    "PrincipioActivo": "PANCREATINA DIMETILPOLISILOXANO",
+    "PrecioFarmacia": 0.275,
+    "PVP": 0.39,
+    "Promocion": "6+1  10+2  50+12  100+30",
+    "Marca": "CIENVEC",
+    "IVA": "NO"
+  },
+  {
+    "ID": 78,
+    "NombreProducto": "EQUIPO DE SUCCION DE HERIDAS 100ML JACKSON PRATT",
+    "Presentacion": "UNIDAD",
+    "PrincipioActivo": "PANCREATINA DIMETILPOLISILOXANO",
+    "PrecioFarmacia": 23.4,
+    "PVP": 33.63,
+    "Promocion": "12+1",
+    "Descuento": "4% DSCTO + DE 2 UNID",
+    "Marca": "MEDLINE",
+    "IVA": "NO"
+  }
+]
