@@ -1,16 +1,44 @@
 <template>
   <div>
     <h2>Productos Agregados</h2>
+    <div style="display: flex; margin: 5px">
+      <div>
+        <input
+          type="text"
+          v-model="nEmpresa"
+          class="form-control"
+          placeholder="Escribe Empresa..."
+        />
+      </div>
+      <div>
+        <input
+          type="text"
+          v-model="nVendedor"
+          class="form-control"
+          placeholder="Escribe Vendedor..."
+        />
+      </div>
+      <div>
+        <input
+          type="text"
+          v-model="nSector"
+          class="form-control"
+          placeholder="Escribe Sector..."
+        />
+      </div>
+    </div>
     <!-- Botones para exportar en diferentes formatos -->
-    <button @click="exportarAExcel" class="btn btn-success">
-      Exportar a Excel
-    </button>
-    <button @click="exportarProformaAExcel" class="btn btn-info">
-      Exportar como Proforma
-    </button>
-    <button @click="exportarPedidoAExcel" class="btn btn-primary">
-      Exportar como Pedido
-    </button>
+    <div style="display: flex; gap: 5px">
+      <button @click="exportarAExcel" class="btn btn-success">
+        Exportar a Excel
+      </button>
+      <button @click="exportarProformaAExcel" class="btn btn-info">
+        Exportar como Proforma
+      </button>
+      <button @click="exportarPedidoAExcel" class="btn btn-primary">
+        Exportar como Pedido
+      </button>
+    </div>
 
     <!-- Mostrar mensaje si no hay productos en el carrito -->
     <div v-if="productosAgregados.length === 0">
@@ -30,8 +58,6 @@
           <th>Marca</th>
           <th>PVP</th>
           <th>Promoción</th>
-          <th>Precio Unitario</th>
-          <th>Total</th>
         </tr>
       </thead>
       <tbody>
@@ -51,24 +77,8 @@
           <td>{{ producto.Presentacion }}</td>
           <td>${{ producto.PrecioFarmacia.toFixed(2) }}</td>
           <td>{{ producto.Marca }}</td>
-          <td>{{ producto.PVP || "N/A" }}</td>
+          <td>${{ producto.PVP.toFixed(2) || "N/A" }}</td>
           <td>{{ producto.Promocion || "N/A" }}</td>
-          <td>
-            ${{
-              (
-                producto.PrecioFarmacia * (producto.IVA === "SI" ? 1.15 : 1)
-              ).toFixed(2)
-            }}
-          </td>
-          <td>
-            ${{
-              (
-                producto.PrecioFarmacia *
-                producto.cantidad *
-                (producto.IVA === "SI" ? 1.15 : 1)
-              ).toFixed(2)
-            }}
-          </td>
         </tr>
       </tbody>
     </table>
@@ -79,6 +89,10 @@
 // Importar las librerías necesarias
 import { ref, onMounted } from "vue";
 import ExcelJS from "exceljs";
+
+const nEmpresa = ref("");
+const nVendedor = ref("");
+const nSector = ref("");
 
 // Declarar las referencias
 const productosAgregados = ref([]);
@@ -211,28 +225,80 @@ const exportarAExcel = async () => {
 // Función para exportar como Proforma
 const exportarProformaAExcel = async () => {
   try {
+    // Validar que los campos nEmpresa, nVendedor y nSector no estén vacíos ni sean null
+    if (!nEmpresa.value || !nVendedor.value || !nSector.value) {
+      alert(
+        "Por favor, complete los campos de EMPRESA, VENDEDOR y SECTOR antes de exportar."
+      );
+      return; // Detener la ejecución si falta algún campo
+    }
     const workbook = new ExcelJS.Workbook();
     const worksheet = workbook.addWorksheet("Proforma");
 
-    // Definir los encabezados de la proforma
-    worksheet.columns = [
-      { header: "Nombre", key: "nombre" },
-      { header: "Precio Farmacia", key: "precioFarmacia" },
-      { header: "Promoción", key: "promocion" },
-      { header: "Marca", key: "marca" },
-      { header: "Presentación", key: "presentacion" },
-    ];
+    // Si las variables están vacías, asignarles un valor predeterminado
+    const empresa = nEmpresa.value || "Empresa no especificada";
+    const vendedor = nVendedor.value || "Vendedor no especificado";
+    const sector = nSector.value || "Sector no especificado";
 
-    // Llenar los datos de la proforma
-    productosAgregados.value.forEach((producto) => {
-      worksheet.addRow({
-        nombre: producto.NombreProducto,
-        precioFarmacia: producto.PrecioFarmacia.toFixed(2),
-        promocion: producto.Promocion || "N/A",
-        marca: producto.Marca || "N/A", // Asumí que tienes la propiedad "Marca"
-        presentacion: producto.Presentacion,
+    // Agregar las primeras 3 filas con los títulos "EMPRESA", "VENDEDOR", "SECTOR"
+
+    worksheet.addRow(["EMPRESA"]);
+    worksheet.addRow(["VENDEDOR"]);
+    worksheet.addRow(["SECTOR"]);
+    worksheet.addRow(); // Agregar un salto de fila
+
+    // Fusionar las celdas B1 y C1 para colocar el valor de la empresa
+    worksheet.mergeCells("B1:D1"); // Fusionar las celdas B1 y C1
+    worksheet.getCell("B1").value = empresa; // Asignar el valor de 'empresa' a la celda fusionada
+    // Fusionar las celdas B1 y C1 para colocar el valor de la empresa
+    worksheet.mergeCells("B2:D2"); // Fusionar las celdas B1 y C1
+    worksheet.getCell("B2").value = vendedor; // Asignar el valor de 'empresa' a la celda fusionada
+    // Fusionar las celdas B1 y C1 para colocar el valor de la empresa
+    worksheet.mergeCells("B3:D3"); // Fusionar las celdas B1 y C1
+    worksheet.getCell("B3").value = sector; // Asignar el valor de 'empresa' a la celda fusionada
+
+    // Agregar los encabezados a partir de la fila 5
+    worksheet.addRow([
+      "Nombre",
+      "Precio Farmacia",
+      "Promoción",
+      "Marca",
+      "Presentación",
+    ]);
+
+    // Verificar si productosAgregados.value es un array y contiene productos
+    if (
+      Array.isArray(productosAgregados.value) &&
+      productosAgregados.value.length > 0
+    ) {
+      productosAgregados.value.forEach((producto) => {
+        // Verificar que cada producto tenga las propiedades correctas
+        if (producto.NombreProducto && producto.PrecioFarmacia !== undefined) {
+          // Asegurarse de que PrecioFarmacia es un número
+          const precioFarmacia = parseFloat(producto.PrecioFarmacia) || 0;
+
+          // Verificar que las propiedades necesarias estén definidas
+          const promocion = producto.Promocion || "N/A";
+          const marca = producto.Marca || "N/A";
+          const presentacion = producto.Presentacion || "N/A";
+
+          // Agregar la fila al Excel
+          worksheet.addRow([
+            producto.NombreProducto,
+            precioFarmacia.toFixed(2), // Asegurarse que tiene 2 decimales
+            promocion,
+            marca,
+            presentacion,
+          ]);
+        } else {
+          console.warn("Producto sin propiedades necesarias:", producto);
+        }
       });
-    });
+    } else {
+      console.warn(
+        "No se encontró productos en productosAgregados.value o no es un array."
+      );
+    }
 
     // Ajustar el tamaño de las celdas
     worksheet.getColumn(1).width = 30;
@@ -282,7 +348,7 @@ const exportarProformaAExcel = async () => {
     const blob = new Blob([buffer], { type: "application/octet-stream" });
     const link = document.createElement("a");
     link.href = URL.createObjectURL(blob);
-    link.download = "proforma.xlsx";
+    link.download = `Proforma_${empresa}_${sector}.xlsx`;
     link.click();
   } catch (error) {
     console.error("Error al exportar como Proforma:", error);
@@ -298,32 +364,84 @@ const exportarProformaAExcel = async () => {
 // Función para exportar como Proforma
 const exportarPedidoAExcel = async () => {
   try {
+    // Validar que los campos nEmpresa, nVendedor y nSector no estén vacíos ni sean null
+    if (!nEmpresa.value || !nVendedor.value || !nSector.value) {
+      alert(
+        "Por favor, complete los campos de EMPRESA, VENDEDOR y SECTOR antes de exportar."
+      );
+      return; // Detener la ejecución si falta algún campo
+    }
     const workbook = new ExcelJS.Workbook();
     const worksheet = workbook.addWorksheet("Proforma");
 
-    // Definir los encabezados de la proforma
-    worksheet.columns = [
-      { header: "Nombre", key: "nombre" },
-      { header: "Precio Farmacia", key: "precioFarmacia" },
-      { header: "Promoción", key: "promocion" },
-      { header: "Marca", key: "marca" },
-      { header: "Presentación", key: "presentacion" },
-      { header: "Lote", key: "lote" },
-      { header: "Fecha Vencimiento", key: "fvencimiento" },
-    ];
+    // Si las variables están vacías, asignarles un valor predeterminado
+    const empresa = nEmpresa.value || "Empresa no especificada";
+    const vendedor = nVendedor.value || "Vendedor no especificado";
+    const sector = nSector.value || "Sector no especificado";
 
-    // Llenar los datos de la proforma
-    productosAgregados.value.forEach((producto) => {
-      worksheet.addRow({
-        nombre: producto.NombreProducto,
-        precioFarmacia: producto.PrecioFarmacia.toFixed(2),
-        promocion: producto.Promocion || "N/A",
-        marca: producto.Marca || "N/A", // Asumí que tienes la propiedad "Marca"
-        presentacion: producto.Presentacion,
-        lote: "",
-        fvencimiento: "",
+    // Agregar las primeras 3 filas con los títulos "EMPRESA", "VENDEDOR", "SECTOR"
+
+    worksheet.addRow(["EMPRESA"]);
+    worksheet.addRow(["VENDEDOR"]);
+    worksheet.addRow(["SECTOR"]);
+    worksheet.addRow(); // Agregar un salto de fila
+
+    // Fusionar las celdas B1 y C1 para colocar el valor de la empresa
+    worksheet.mergeCells("B1:D1"); // Fusionar las celdas B1 y C1
+    worksheet.getCell("B1").value = empresa; // Asignar el valor de 'empresa' a la celda fusionada
+    // Fusionar las celdas B1 y C1 para colocar el valor de la empresa
+    worksheet.mergeCells("B2:D2"); // Fusionar las celdas B1 y C1
+    worksheet.getCell("B2").value = vendedor; // Asignar el valor de 'empresa' a la celda fusionada
+    // Fusionar las celdas B1 y C1 para colocar el valor de la empresa
+    worksheet.mergeCells("B3:D3"); // Fusionar las celdas B1 y C1
+    worksheet.getCell("B3").value = sector; // Asignar el valor de 'empresa' a la celda fusionada
+
+    // Agregar los encabezados a partir de la fila 5
+    worksheet.addRow([
+      "Nombre",
+      "Precio Farmacia",
+      "Promoción",
+      "Marca",
+      "Presentación",
+      "Lote",
+      "Fecha Vencimiento",
+    ]);
+
+    // Verificar si productosAgregados.value es un array y contiene productos
+    if (
+      Array.isArray(productosAgregados.value) &&
+      productosAgregados.value.length > 0
+    ) {
+      productosAgregados.value.forEach((producto) => {
+        // Verificar que cada producto tenga las propiedades correctas
+        if (producto.NombreProducto && producto.PrecioFarmacia !== undefined) {
+          // Asegurarse de que PrecioFarmacia es un número
+          const precioFarmacia = parseFloat(producto.PrecioFarmacia) || 0;
+
+          // Verificar que las propiedades necesarias estén definidas
+          const promocion = producto.Promocion || "N/A";
+          const marca = producto.Marca || "N/A";
+          const presentacion = producto.Presentacion || "N/A";
+
+          // Agregar la fila al Excel
+          worksheet.addRow([
+            producto.NombreProducto,
+            precioFarmacia.toFixed(2), // Asegurarse que tiene 2 decimales
+            promocion,
+            marca,
+            presentacion,
+            "", // Lote
+            "", // Fecha Vencimiento
+          ]);
+        } else {
+          console.warn("Producto sin propiedades necesarias:", producto);
+        }
       });
-    });
+    } else {
+      console.warn(
+        "No se encontró productos en productosAgregados.value o no es un array."
+      );
+    }
 
     // Ajustar el tamaño de las celdas
     worksheet.getColumn(1).width = 30;
@@ -375,7 +493,7 @@ const exportarPedidoAExcel = async () => {
     const blob = new Blob([buffer], { type: "application/octet-stream" });
     const link = document.createElement("a");
     link.href = URL.createObjectURL(blob);
-    link.download = "proforma.xlsx";
+    link.download = `Pedido_${empresa}_${sector}.xlsx`;
     link.click();
   } catch (error) {
     console.error("Error al exportar como Proforma:", error);

@@ -15,7 +15,15 @@
     <div><strong>PVP:</strong> ${{ producto.PVP }}</div>
     <div><strong>Marca:</strong> {{ producto.Marca }}</div>
     <div><strong>IVA:</strong> {{ producto.IVA }}</div>
-    <div><strong>Precio con IVA:</strong> ${{ precioConIVA }}</div>
+    <div>
+      <strong>Precio con IVA: </strong>
+      <span v-if="producto.IVA == 'SI'">
+        {{ producto.IVA }} tiene IVA - ${{
+          (producto.PVP * 15) / 100 + producto.PVP
+        }}</span
+      >
+      <span v-else> {{ producto.IVA }} tiene IVA</span>
+    </div>
 
     <!-- Entrada para la cantidad -->
     <div>
