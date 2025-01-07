@@ -217,6 +217,8 @@ const exportarAExcel = async () => {
     link.href = URL.createObjectURL(blob);
     link.download = "productos.xlsx";
     link.click();
+    // Vaciar el localStorage después de cargar los datos
+    localStorage.removeItem("productosAgregados"); // Elimina solo el item "productosAgregados"
   } catch (error) {
     console.error("Error al exportar a Excel:", error);
   }
@@ -350,6 +352,9 @@ const exportarProformaAExcel = async () => {
     link.href = URL.createObjectURL(blob);
     link.download = `Proforma_${empresa}_${sector}.xlsx`;
     link.click();
+
+    // Vaciar el localStorage después de cargar los datos
+    localStorage.removeItem("productosAgregados"); // Elimina solo el item "productosAgregados"
   } catch (error) {
     console.error("Error al exportar como Proforma:", error);
   }
@@ -495,6 +500,9 @@ const exportarPedidoAExcel = async () => {
     link.href = URL.createObjectURL(blob);
     link.download = `Pedido_${empresa}_${sector}.xlsx`;
     link.click();
+
+    // Vaciar el localStorage después de cargar los datos
+    localStorage.removeItem("productosAgregados"); // Elimina solo el item "productosAgregados"
   } catch (error) {
     console.error("Error al exportar como Proforma:", error);
   }

@@ -1,10 +1,35 @@
 <template>
-  <div id="app">
+  <div id="app" style="margin: 10px">
     <!-- Agregar un enlace de navegación -->
-    <nav>
+    <!-- <nav >
       <router-link to="/IndexProductos">Inicio</router-link> |
       <router-link to="/ProductosList">Mostrar Productos</router-link> |
       <router-link to="/ProductosAgregados">Productos Agregados</router-link>
+    </nav> -->
+
+    <nav
+      class="navbar navbar-expand-sm navbar-dark bg-dark"
+      style="padding: 10px"
+    >
+      <div class="">
+        <router-link to="/IndexProductos" class="navbar-brand"
+          >Inicio</router-link
+        >
+      </div>
+      <div class="" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <router-link to="/ProductosList" class="nav-link"
+              >Mostrar Productos</router-link
+            >
+          </li>
+          <li class="nav-item">
+            <router-link to="/ProductosAgregados" class="nav-link"
+              >Productos Agregados</router-link
+            >
+          </li>
+        </ul>
+      </div>
     </nav>
 
     <!-- El contenido del componente se inyectará aquí -->

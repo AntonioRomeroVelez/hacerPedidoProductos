@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Lista de Productos</h1>
+    <!-- <h1>Lista de Productos</h1> -->
 
     <!-- Input para buscar productos por nombre -->
     <div>
@@ -58,10 +58,6 @@ onMounted(async () => {
   }
 });
 
-// Definir una propiedad para guardar los datos de producto y cantidad
-const productoEnCarrito = ref(null);
-const cantidadEnCarrito = ref(0);
-
 const agregarProductoPadre = (cantidad, producto) => {
   // Buscar si el producto ya está agregado en el carrito
   const index = productosAgregados.value.findIndex((p) => p.ID === producto.ID);
@@ -79,9 +75,6 @@ const agregarProductoPadre = (cantidad, producto) => {
       `Producto agregado: ${producto.NombreProducto}, cantidad de ${cantidad} unidades.`
     );
   }
-
-  // Mostrar el carrito actualizado en la consola
-  console.log(productosAgregados.value);
 
   // Guardar los productos agregados en el localStorage
   localStorage.setItem(

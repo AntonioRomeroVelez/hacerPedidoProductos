@@ -1,42 +1,53 @@
 <template>
   <div v-if="producto" class="container">
     <!-- Mostrar los detalles del producto -->
-    <div><strong>Nombre:</strong> {{ producto.NombreProducto }}</div>
-    <div><strong>Presentación:</strong> {{ producto.Presentacion }}</div>
-    <div><strong>Principio Activo:</strong> {{ producto.PrincipioActivo }}</div>
     <div>
-      <strong>Promoción:</strong>
-      <span v-if="producto.Promocion" class="text-primary">{{
-        producto.Promocion
-      }}</span>
-      <span v-else class="text-warning"> No tiene promoción</span>
+      <!-- <strong>Nombre: </strong> -->
+      <p>{{ producto.NombreProducto }}</p>
     </div>
-    <div><strong>Precio Farmacia:</strong> ${{ producto.PrecioFarmacia }}</div>
-    <div><strong>PVP:</strong> ${{ producto.PVP }}</div>
-    <div><strong>Marca:</strong> {{ producto.Marca }}</div>
-    <div><strong>IVA:</strong> {{ producto.IVA }}</div>
-    <div>
-      <strong>Precio con IVA: </strong>
-      <span v-if="producto.IVA == 'SI'">
-        {{ producto.IVA }} tiene IVA - ${{
-          (producto.PVP * 15) / 100 + producto.PVP
-        }}</span
-      >
-      <span v-else> {{ producto.IVA }} tiene IVA</span>
+    <div class="cajas">
+      <div>
+        <strong>Principio Activo: </strong> {{ producto.PrincipioActivo }}
+      </div>
+
+      <div><strong>Presentación: </strong> {{ producto.Presentacion }}</div>
+
+      <div>
+        <strong>Promoción: </strong>
+        <span v-if="producto.Promocion" class="text-primary">{{
+          producto.Promocion
+        }}</span>
+        <span v-else class="text-warning"> No tiene promoción</span>
+      </div>
+      <div><strong>Marca: </strong> {{ producto.Marca }}</div>
+
+      <div style="display: inline-flex">
+        <strong>PVP: </strong> ${{ producto.PVP }}
+      </div>
+      <div style="display: inline-flex">
+        <strong>Precio Farmacia: </strong>
+        ${{ producto.PrecioFarmacia }}
+      </div>
+
+      <div>
+        <strong>Precio con IVA: </strong>
+        <span v-if="producto.IVA == 'SI'"
+          >&nbsp; {{ producto.IVA }} tiene IVA - ${{
+            (producto.PVP * 15) / 100 + producto.PVP
+          }}</span
+        >
+        <span v-else>&nbsp; {{ producto.IVA }} tiene IVA</span>
+      </div>
     </div>
 
     <!-- Entrada para la cantidad -->
-    <div>
-      <strong>Cantidad:</strong>
-      <input v-model="cantidad" type="number" min="1" class="cantidad" />
-    </div>
+    <strong>Cantidad:</strong>
+    <input v-model="cantidad" type="number" min="1" class="cantidad" />
 
     <!-- Botón para agregar al carrito -->
-    <div class="text-center">
-      <button @click="agregarCarrito" class="btn btn-success">
-        Agregar al Carrito
-      </button>
-    </div>
+    <button @click="agregarCarrito" class="btn btn-success" style="margin: 4px">
+      Agregar al Carrito
+    </button>
   </div>
 </template>
 
@@ -80,22 +91,38 @@ const precioConIVA = computed(() => {
 
 <style scoped>
 /* Estilos opcionales para el componente hijo */
-div {
-  margin-bottom: 10px;
-}
+
 .container {
   border: solid 1px silver;
+  background-color: rgb(245, 244, 233);
   display: inline-table;
-  width: 300px;
   margin: 10px;
   padding: 5px;
+  width: 300px;
   border-radius: 5px;
 }
+
 .cantidad {
   border: solid 1px silver;
-  width: 80px;
+  width: 100px;
+  height: 40px;
   border-radius: 5px;
   text-align: center;
   outline: none;
+  font-size: 1.5rem;
+  margin-right: 5px;
+}
+p {
+  font-weight: bolder;
+  text-align: center;
+}
+
+.cajas > div {
+  border: solid 1px rgb(199, 199, 243);
+  background-color: azure;
+  padding: 5px;
+  margin: 2px;
+  border-radius: 5px;
+  display: table;
 }
 </style>
